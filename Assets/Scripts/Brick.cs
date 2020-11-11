@@ -10,10 +10,9 @@ public class Brick : MonoBehaviour
 
     private SpriteRenderer _sr;
 
-    private void Start()
+    private void Awake()
     {
         this._sr = this.GetComponent<SpriteRenderer>();
-        this._sr.sprite = BricksManager.Instance.sprites[this.hitPoints - 1];
     }
 
     //public static event Action<Brick> onBrickDestruction;
@@ -50,5 +49,13 @@ public class Brick : MonoBehaviour
         mm.startColor = this._sr.color;
         Destroy(effect, destroyEffect.main.startLifetime.constant);
 
+    }
+
+    internal void Init(Transform containerTransform, int hitPoints)
+    {
+        this.transform.SetParent(containerTransform);
+        this._sr.sprite = BricksManager.Instance.sprites[hitPoints - 1];
+        this._sr.color = BricksManager.Instance.brickColors[hitPoints - 1];
+        this.hitPoints = hitPoints;
     }
 }
