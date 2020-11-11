@@ -47,6 +47,9 @@ TagManager:
   - name: Ball
     uniqueID: 606063841
     locked: 0
+  - name: Brick
+    uniqueID: 76240841
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

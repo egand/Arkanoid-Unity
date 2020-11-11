@@ -53,4 +53,18 @@ public class Paddle : MonoBehaviour
         float mousePosX = _mainCamera.ScreenToWorldPoint(new Vector3(mousePosPixel, 0, 0)).x;
         this.transform.position = new Vector2(mousePosX, _paddleInitialY);
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<Ball>() != null)
+        {
+            Rigidbody2D ballRb = collision.gameObject.GetComponent<Rigidbody2D>();
+            Vector2 hitPosition = collision.GetContact(0).point;
+            Vector2 paddleCenter = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
+            ballRb.velocity = Vector2.zero;
+            float distFromCenter = paddleCenter.x - hitPosition.x;
+            int sign = hitPosition.x < paddleCenter.x ? -1 : 1; // if left go left, if right go right
+            ballRb.AddForce(new Vector2(sign * Mathf.Abs(distFromCenter * 200), BallsManager.Instance.initialBallSpeed));
+        }
+    }
 }
